@@ -15,7 +15,7 @@
            tobeEchoed+= "{\n" +
                     "title: 'The Adventures of Sherlock Holmes',\n" +
                     "image: '/Images/" +ebook.PathToCoverImage+ "',\n" +
-                    "link: '/Views/EbookView'\n" +
+                    "link: '/Views/EbookView?EbookName="+ebook.Title+"'\n" +
                     "},\n";
         }
         Response.Write(tobeEchoed);

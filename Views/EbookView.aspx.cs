@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 public partial class Views_EbookView : System.Web.UI.Page
@@ -13,8 +14,19 @@ public partial class Views_EbookView : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.selectedEbook = (Ebook)Session["SelectedEbook"];
-        DisplayEbookContent();
+        string EbookName = Request.QueryString["EbookName"];
+        if (EbookName != null)
+        {
+            List<Ebook> allEbooks = (List<Ebook>)Session["AllUploadesEbooks"];
+            this.selectedEbook = allEbooks.Find(Ebook => Ebook.Title == EbookName);
+            DisplayEbookContent();
+            ((HtmlAnchor)Master.FindControl("TitleLbl")).InnerText = selectedEbook.Title;
+        }
+        else
+        {
+            string redirectURL = "/Default.aspx";
+            Response.Redirect(redirectURL);
+        }
     }
 
     private void DisplayEbookContent()
@@ -42,11 +54,12 @@ public partial class Views_EbookView : System.Web.UI.Page
 
                     if (bodyNode != null)
                     {
-                        decodedText = bodyNode.InnerText;
+                        decodedText = bodyNode.InnerHtml;
                     }
                 }
             }
             decodedText = decodedText.Replace(Environment.NewLine, "<br/>");
+            decodedText = decodedText.Replace("<br/><br/>", "<br/>");
             chapterTextlbl.InnerHtml = decodedText;
         }
         catch (Exception ex)
