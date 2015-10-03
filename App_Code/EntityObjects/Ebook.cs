@@ -1,6 +1,7 @@
 ﻿using eBdb.EpubReader;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -16,6 +17,10 @@ public class Ebook
     public string Author { get; set; }
     public string Publisher { get; set; }
     public string FilePath { get; set; }
+    public Image CoverImage { get; set; }
+
+    public string PathToCoverImage = @"F:\";
+
     public List<EbookChapter> Chapters = new List<EbookChapter>();
 
     public Ebook(string filePath)
@@ -42,6 +47,16 @@ public class Ebook
         EpubBook epub = EpubReader.OpenBook(FilePath);
         this.Title=epub.Title;
         this.Author = epub.Author;
+        this.PathToCoverImage = PathToCoverImage + Path.GetFileName(FilePath).Split('.')[0] + ".png";
+        this.PathToCoverImage = PathToCoverImage.Replace(' ', '_').Replace('-', '_');
+
+        File.WriteAllText(PathToCoverImage, "");
+        File.Delete(PathToCoverImage);
+
+        Bitmap bmp = new Bitmap(epub.CoverImage);
+        bmp.Save(this.PathToCoverImage);
+        //epub.CoverImage.Save(PathToCoverImage);
+      
 
         foreach (EpubChapter chapter in epub.Chapters) 
         {

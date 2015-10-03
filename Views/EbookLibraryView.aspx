@@ -8,33 +8,33 @@
         var books = [
 			{
 			    title: 'The Adventures of Sherlock Holmes',
-			    image: 'http://covers.openlibrary.org/b/isbn/9780688107826-M.jpg',
+			    image: '/Images/The_Drop___Michael_Connelly.png',
 			    link: '/Views/EbookView'
 			},
 			{
 			    title: 'A Christmas Carol',
-			    image: 'http://covers.openlibrary.org/b/isbn/9781416534785-M.jpg',
+			    image: '/Images/The_Drop___Michael_Connelly.png',
 			    link: '/Views/EbookView'
 			},
 			{
 			    title: 'Moby Dick',
-			    image: 'http://covers.openlibrary.org/b/isbn/9780205514083-M.jpg',
+			    image: '/Images/The_Drop___Michael_Connelly.png',
 			    link: '/Views/EbookView'
 			},
 			{
 			    title: 'Pride and Prejudice',
-			    image: 'http://covers.openlibrary.org/b/isbn/9780140430745-M.jpg',
+			    image: '/Images/The_Drop___Michael_Connelly.png',
 			    link: '/Views/EbookView'
 			},
 			{
 			    title: "Gulliver's travels",
-			    image: 'http://covers.openlibrary.org/b/isbn/9780721417523-M.jpg',
+			    image: '/Images/The_Drop___Michael_Connelly.png',
 			    link: '/Views/EbookView'
 			},
 			{
 			    title: 'Hamlet',
-			    image: 'http://covers.openlibrary.org/b/isbn/9781904271550-M.jpg',
-			    link: '/Views/EbookView"'
+			    image: '/Images/The_Drop___Michael_Connelly.png',
+			    link: '/Views/EbookView'
 			}
         ];
 

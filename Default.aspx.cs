@@ -18,36 +18,51 @@ public partial class _Default : Page
         {
             string target = Request.Params["__EVENTTARGET"];
             //string args = Request.Params["__EVENTARGUMENT"];
-            if (target.Contains("Browse"))
-            {
+            //if (target.Contains("Browse"))
+            //{
                 BrowseButton_Click(sender, e);
-            }
+            //}
         }
 
     }
     protected void BrowseButton_Click(object sender, EventArgs e)
     {
-        if (FileUploadControl.HasFile)
+        if (FileUploadControl.HasFiles)
         {
             try
             {
-                string ext = Path.GetExtension(FileUploadControl.FileName);
-                if (AllowedFileExtensions.Contains(ext))
-                {
-                    string fileName = UPLOAD_FILE_DIR + FileUploadControl.FileName;
-                    //Save file
-                    FileUploadControl.SaveAs(fileName);
+                List<Ebook> uploadedBooks = new List<Ebook>();
+                List<string> invalidFiles = new List<string>();
 
-                    Ebook ebook = new Ebook(fileName);
-                    Session["Ebook"] = ebook;
-                    Response.Redirect("Views/EbookLibraryView");
-                }
-                else
+                foreach (var file in FileUploadControl.PostedFiles)
                 {
-                    //display error msg
-                    string Msg = "Please Upload a valid File";
-                    bll.ShowText(Msg, true, Master);
+                    string ext = Path.GetExtension(file.FileName);
+
+                    if (AllowedFileExtensions.Contains(ext))
+                    {
+                        string fileName = UPLOAD_FILE_DIR + file.FileName;
+
+                        FileUploadControl.SaveAs(fileName);
+
+                        Ebook ebook = new Ebook(fileName);
+
+                        uploadedBooks.Add(ebook);
+
+                    }
+                    else
+                    {
+                        //display error msg
+                        string errorMsg = "Invalid Ebook Format for :" + file.FileName;
+
+                        invalidFiles.Add(errorMsg);
+
+                    }
                 }
+
+                Session["AllUploadesEbooks"] = uploadedBooks;
+                Session["ErrorMessages"] = invalidFiles;
+
+                Response.Redirect("Views/EbookLibraryView");
 
             }
             catch (Exception ex)
