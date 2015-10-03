@@ -42,7 +42,7 @@ public partial class _Default : Page
                     {
                         string fileName = UPLOAD_FILE_DIR + file.FileName;
 
-                        FileUploadControl.SaveAs(fileName);
+                        file.SaveAs(fileName);
 
                         Ebook ebook = new Ebook(fileName);
 
@@ -60,6 +60,7 @@ public partial class _Default : Page
                 }
 
                 Session["AllUploadesEbooks"] = uploadedBooks;
+                Session["SelectedEbook"] = uploadedBooks[3];
                 Session["ErrorMessages"] = invalidFiles;
 
                 Response.Redirect("Views/EbookLibraryView");

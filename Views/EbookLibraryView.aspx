@@ -6,36 +6,21 @@
     <script src="../Scripts/bookshelf.js" type="text/javascript"></script>
     <script type="text/javascript">
         var books = [
-			{
-			    title: 'The Adventures of Sherlock Holmes',
-			    image: '/Images/The_Drop___Michael_Connelly.png',
-			    link: '/Views/EbookView'
-			},
-			{
-			    title: 'A Christmas Carol',
-			    image: '/Images/The_Drop___Michael_Connelly.png',
-			    link: '/Views/EbookView'
-			},
-			{
-			    title: 'Moby Dick',
-			    image: '/Images/The_Drop___Michael_Connelly.png',
-			    link: '/Views/EbookView'
-			},
-			{
-			    title: 'Pride and Prejudice',
-			    image: '/Images/The_Drop___Michael_Connelly.png',
-			    link: '/Views/EbookView'
-			},
-			{
-			    title: "Gulliver's travels",
-			    image: '/Images/The_Drop___Michael_Connelly.png',
-			    link: '/Views/EbookView'
-			},
-			{
-			    title: 'Hamlet',
-			    image: '/Images/The_Drop___Michael_Connelly.png',
-			    link: '/Views/EbookView'
-			}
+
+        <%
+        List<Ebook> uploadedBooks = (List<Ebook>)Session["AllUploadesEbooks"];
+        string tobeEchoed ="";
+        foreach (var ebook in uploadedBooks)
+        {
+           tobeEchoed+= "{\n" +
+                    "title: 'The Adventures of Sherlock Holmes',\n" +
+                    "image: '/Images/" +ebook.PathToCoverImage+ "',\n" +
+                    "link: '/Views/EbookView'\n" +
+                    "},\n";
+        }
+        Response.Write(tobeEchoed);
+        %>
+			
         ];
 
         $(function () {

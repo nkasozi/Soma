@@ -18,6 +18,17 @@ public class Ebook
     public string Publisher { get; set; }
     public string FilePath { get; set; }
     public Image CoverImage { get; set; }
+    private int _currentChapterIndex;
+    public int CurrentChapterIndex
+    {
+        get { return _currentChapterIndex; } 
+        set {
+              if (value < 0) //shouldnt drop below 0 or u get index out of range exception
+                { _currentChapterIndex = 0; } 
+              else
+                { _currentChapterIndex = value; }
+             }
+    }
 
     public string PathToCoverImage = @"F:\";
 
@@ -25,6 +36,7 @@ public class Ebook
 
     public Ebook(string filePath)
     {
+        this._currentChapterIndex = 2;
         this.FilePath = filePath;
         string fileExtension = Path.GetExtension(filePath);
         OpenEbookAndReadContent(fileExtension);
@@ -47,14 +59,17 @@ public class Ebook
         EpubBook epub = EpubReader.OpenBook(FilePath);
         this.Title=epub.Title;
         this.Author = epub.Author;
-        this.PathToCoverImage = PathToCoverImage + Path.GetFileName(FilePath).Split('.')[0] + ".png";
+        this.PathToCoverImage= Path.GetFileName(FilePath).Split('.')[0] + ".png";
         this.PathToCoverImage = PathToCoverImage.Replace(' ', '_').Replace('-', '_');
+        this.PathToCoverImage = System.Web.HttpContext.Current.Server.MapPath("~/Images/" +PathToCoverImage);
 
         File.WriteAllText(PathToCoverImage, "");
         File.Delete(PathToCoverImage);
 
         Bitmap bmp = new Bitmap(epub.CoverImage);
         bmp.Save(this.PathToCoverImage);
+
+        this.PathToCoverImage = Path.GetFileName(PathToCoverImage);
         //epub.CoverImage.Save(PathToCoverImage);
       
 
