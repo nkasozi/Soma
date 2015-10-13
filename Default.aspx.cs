@@ -14,14 +14,17 @@ public partial class _Default : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (IsPostBack)
+        if (Session.IsNewSession)
         {
-            string target = Request.Params["__EVENTTARGET"];
-            //string args = Request.Params["__EVENTARGUMENT"];
-            //if (target.Contains("Browse"))
-            //{
+            Response.Redirect("Account/Login");
+        }
+        else
+        {
+            if (IsPostBack)
+            {
+                string target = Request.Params["__EVENTTARGET"];
                 BrowseButton_Click(sender, e);
-            //}
+            }
         }
 
     }
@@ -33,6 +36,7 @@ public partial class _Default : Page
             {
                 List<Ebook> uploadedBooks = new List<Ebook>();
                 List<string> invalidFiles = new List<string>();
+                AppDbContext db = new AppDbContext();
 
                 foreach (var file in FileUploadControl.PostedFiles)
                 {
@@ -45,6 +49,8 @@ public partial class _Default : Page
                         file.SaveAs(fileName);
 
                         Ebook ebook = new Ebook(fileName);
+                        ebook.AppUserId = ((AppUser)Session["AppUser"]).AppUserId;
+                        ebook.Save();
 
                         uploadedBooks.Add(ebook);
 
@@ -60,7 +66,6 @@ public partial class _Default : Page
                 }
 
                 Session["AllUploadesEbooks"] = uploadedBooks;
-                Session["SelectedEbook"] = uploadedBooks[3];
                 Session["ErrorMessages"] = invalidFiles;
 
                 Response.Redirect("Views/EbookLibraryView");
@@ -70,14 +75,14 @@ public partial class _Default : Page
             {
                 //display error msg
                 string Msg = "Error: " + ex.Message;
-                bll.ShowText(Msg, true, Master);
+                LblErrorMsg.InnerHtml = Msg;
             }
         }
         else
         {
             //display error msg
             string Msg = "Please Specify a File to Upload";
-            bll.ShowText(Msg, true, Master);
+            LblErrorMsg.InnerHtml = Msg;
         }
     }
 

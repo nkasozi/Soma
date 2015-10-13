@@ -1,6 +1,11 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Facebook;
+using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Web;
 using System.Web.UI;
 using TestAspNet;
@@ -9,32 +14,44 @@ public partial class Account_Login : Page
 {
         protected void Page_Load(object sender, EventArgs e)
         {
-            RegisterHyperLink.NavigateUrl = "Register";
-            OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
-            var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);
-            if (!String.IsNullOrEmpty(returnUrl))
+           
+        }
+
+        protected void LogInUsingFacebook(object sender, EventArgs e)
+        {
+            try
             {
-                RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
+                Response.Redirect("LoginUsingFacebook.aspx");
             }
+            catch (Exception ex)
+            {
+                FailureText.Text = ex.Message;
+            } 
         }
 
         protected void LogIn(object sender, EventArgs e)
         {
-            if (IsValid)
+            try
             {
-                // Validate the user password
-                var manager = new UserManager();
-                ApplicationUser user = manager.Find(UserName.Text, Password.Text);
-                if (user != null)
+                AppUser user = new AppUser();
+                user.AppUserId = txtUserName.Text.Trim();
+                user.AppUserPassword = txtPassword.Text.Trim();
+
+                if (user.UserCredentialsAreValid())
                 {
-                    IdentityHelper.SignIn(manager, user, RememberMe.Checked);
-                    IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
+                    Session["AppUser"] = user;
+                    Response.Redirect("../Default.aspx");
                 }
-                else
+                else 
                 {
-                    FailureText.Text = "Invalid username or password.";
-                    ErrorMessage.Visible = true;
+                    FailureText.Text = user.StatusDescription;
                 }
             }
+            catch (Exception ex)
+            {
+                FailureText.Text = ex.Message;
+            }
         }
+
+       
 }

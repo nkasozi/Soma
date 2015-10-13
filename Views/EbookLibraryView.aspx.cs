@@ -16,7 +16,10 @@ public partial class Views_EbookLibraryView : System.Web.UI.Page
         }
         else
         {
-            List<Ebook> usersEbooks = (List<Ebook>)Session["AllUploadesEbooks"];
+            //List<Ebook> usersEbooks = (List<Ebook>)Session["AllUploadesEbooks"];
+            AppUser user = Session["AppUser"] as AppUser;
+            List<Ebook> allUsersEbooks = Ebook.GetAll().Where(item => item.AppUserId == user.AppUserId).ToList();
+            Session["AllUploadesEbooks"] = allUsersEbooks;
         }
         
 

@@ -52,8 +52,8 @@
         <div id="bookshelf" style="width: 700px; height: 300px; border: 1px solid #ccc; margin-top: 20px" margin-bottom: 5px" ></div>
         <div id="bookshelf-subtitle" style="text-align: center; height: 0; margin: 0 7em"></div>
         <p class="text-center">
-            <button id="bookshelf-prev" style="margin-top: 3px"" onclick="return false;">Previous</button>
-            <button id="bookshelf-next" style="margin-top: 3px"" onclick="return false;">Next</button>
+            <button id="bookshelf-prev" style="margin-top: 3px"" onclick="return false;" Class="btn btn-primary">Prev</button>
+            <button id="bookshelf-next" style="margin-top: 3px"" onclick="return false;" Class="btn btn-primary">Next</button>
         </p>
     </div>
     

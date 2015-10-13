@@ -13,6 +13,7 @@
                         <asp:FileUpload ID="FileUploadControl" runat="server" CssClass="hidden" onChange="submit();" AllowMultiple="true" />
                         <asp:Button runat="server" ID="BrowseButton" Text="Browse" CssClass="btn btn-primary btn-large" OnClientClick="openfileDialog(); return false;" Height="44px" OnClick="BrowseButton_Click" Width="172px" />
                     </p>
+                    <p runat="server" id="LblErrorMsg"></p>
                 </div>
             </div>
         </div>
