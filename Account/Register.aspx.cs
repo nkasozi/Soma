@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Web.UI;
 using TestAspNet;
@@ -8,17 +9,19 @@ public partial class Account_Register : Page
 {
     protected void CreateUser_Click(object sender, EventArgs e)
     {
-        var manager = new UserManager();
-        var user = new ApplicationUser() { UserName = UserName.Text };
-        IdentityResult result = manager.Create(user, Password.Text);
-        if (result.Succeeded)
+        AppUser appUser = new AppUser();
+        appUser.AppUserId = UserName.Text;
+        appUser.AppUserPassword = Password.Text;
+        if (appUser.IsValid())
         {
-            IdentityHelper.SignIn(manager, user, isPersistent: false);
-            IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
+            appUser.Save();
+            ErrorMessage.Text = appUser.StatusDescription;
+            Response.Redirect("Login.aspx");
         }
-        else
+        else 
         {
-            ErrorMessage.Text = result.Errors.FirstOrDefault();
+
+            ErrorMessage.Text = appUser.StatusDescription;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Views.master.cs" Inherits="Views" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="LoggedIn.master.cs" Inherits="LoggedIn" %>
 
 <!DOCTYPE html>
 
@@ -6,7 +6,7 @@
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> -ReadThoseTales</title>
+    <title>Project Novelish</title>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
@@ -46,13 +46,13 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Project Novelish</a>
+                    <a class="navbar-brand" data-toggle="collapse" data-target="#navbar" href="#">Project Novelish</a>
                     <a class="navbar-center" id="TitleLbl" runat="server" href="#">Project Novelish</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="active">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ebook Settings<span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ebook Settings<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">Chapters</a></li>
                                 <li><a href="#">BookMark This Page</a></li>
@@ -62,11 +62,27 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%=(Session["AppUser"] as AppUser).Name %><span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <%
+                                    //if user has no name
+                                    if (string.IsNullOrEmpty((Session["AppUser"] as AppUser).Name))
+                                    {
+                                        //echo his ID
+                                        Response.Write((Session["AppUser"] as AppUser).AppUserId);
+                                    }
+                                    else
+                                    {
+                                        //else echo his Name
+                                        Response.Write((Session["AppUser"] as AppUser).Name);
+                                    }
+                                %>
+                                <span class="caret">
+                                </span>
+                            </a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">Account Settings</a></li>
                                 <li><a href="#">Theme</a></li>
-                                <li><a href="#">Log out</a></li>
+                                <li><asp:LinkButton runat="server" ID="LogoutLink" OnClick="Logout_Click" href="#">Log out</asp:LinkButton></li>
                             </ul>
                         </li>
                     </ul>
