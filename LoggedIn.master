@@ -56,7 +56,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="#">Chapters</a></li>
                                 <li><a href="#">BookMark This Page</a></li>
-                                <li><a href="Views/EbookLibraryView">Ebook Libarary</a></li>
+                                <li><a href='<%= ResolveClientUrl("~/Views/EbookLibraryView")%>'> Ebook Libarary</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -82,7 +82,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="#">Account Settings</a></li>
                                 <li><a href="#">Theme</a></li>
-                                <li><asp:LinkButton runat="server" ID="LogoutLink" OnClick="Logout_Click" href="#">Log out</asp:LinkButton></li>
+                                <li><a href='<%= ResolveClientUrl("~/Logout.aspx")%>'>SignOut</a></li>
                             </ul>
                         </li>
                     </ul>

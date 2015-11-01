@@ -8,12 +8,10 @@
         <div class="col-md-8">
             <section id="loginForm">
                 <div class="form-horizontal">
-                    <h4>Use a local account to log in.</h4>
+                    <h4  runat="server" id="titleLabel">Use a local account to log in.</h4>
                     <hr />
                     <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
-                        <p class="text-danger">
-                            <asp:Literal runat="server" ID="FailureText" />
-                        </p>
+                        <p class="text-danger" runat="server" id="FailureText"></p>
                     </asp:PlaceHolder>
                     <div class="form-group">
                         <asp:Label ID="Label1" runat="server" AssociatedControlID="txtUserName" CssClass="col-md-2 control-label">User name</asp:Label>

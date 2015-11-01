@@ -9,18 +9,20 @@
 
         <%
         List<Ebook> uploadedBooks = (List<Ebook>)Session["AllUploadesEbooks"];
-        string tobeEchoed ="";
+        string tobeEchoed = "";
         foreach (var ebook in uploadedBooks)
         {
-           tobeEchoed+= "{\n" +
-                    "title: 'The Adventures of Sherlock Holmes',\n" +
-                    "image: '/Images/" +ebook.PathToCoverImage+ "',\n" +
-                    "link: '/Views/EbookView?EbookName="+ebook.Title+"'\n" +
-                    "},\n";
+            string ImagePath = ResolveClientUrl("~/Images/" + ebook.PathToCoverImage);
+            string EbookUrl = ResolveClientUrl("~/Views/EbookView?EbookName=" + ebook.Title);
+            tobeEchoed += "{\n" +
+                     "title: '" + ebook.Title + "',\n" +
+                     "image: '" + ImagePath + "',\n" +
+                     "link: '" + EbookUrl + "'\n" +
+                     "},\n";
         }
         Response.Write(tobeEchoed);
         %>
-			
+
         ];
 
         $(function () {

@@ -10,6 +10,7 @@ public partial class Account_Register : Page
     protected void CreateUser_Click(object sender, EventArgs e)
     {
         AppUser appUser = new AppUser();
+        appUser.Name = TextBoxName.Text;
         appUser.AppUserId = UserName.Text;
         appUser.AppUserPassword = Password.Text;
         if (appUser.IsValid())

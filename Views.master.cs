@@ -11,4 +11,17 @@ public partial class Views : System.Web.UI.MasterPage
     {
 
     }
+
+    protected void LogOutLinkClick(object sender, EventArgs e) 
+    {
+        try
+        {
+            Session.Abandon();
+            Response.Redirect("~/Account/Login.aspx");
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
 }

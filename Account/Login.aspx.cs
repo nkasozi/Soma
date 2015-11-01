@@ -25,7 +25,7 @@ public partial class Account_Login : Page
             }
             catch (Exception ex)
             {
-                FailureText.Text = ex.Message;
+                FailureText.InnerHtml = ex.Message;
             } 
         }
 
@@ -44,12 +44,14 @@ public partial class Account_Login : Page
                 }
                 else 
                 {
-                    FailureText.Text = user.StatusDescription;
+                    titleLabel.Visible = true;
+                    titleLabel.InnerText = user.StatusDescription;
                 }
             }
             catch (Exception ex)
             {
-                FailureText.Text = ex.Message;
+                titleLabel.Visible = true;
+                titleLabel.InnerText = ex.Message;
             }
         }
 

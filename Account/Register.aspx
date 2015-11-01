@@ -13,6 +13,11 @@
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="UserName" CssClass="col-md-2 control-label">User name</asp:Label>
             <div class="col-md-10">
+                <asp:TextBox runat="server" ID="TextBoxName" CssClass="form-control" />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="TextBoxName"
+                    CssClass="text-danger" ErrorMessage="The user name field is required." />
+            </div>
+            <div class="col-md-10">
                 <asp:TextBox runat="server" ID="UserName" CssClass="form-control" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="UserName"
                     CssClass="text-danger" ErrorMessage="The user name field is required." />
